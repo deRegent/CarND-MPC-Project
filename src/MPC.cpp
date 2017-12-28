@@ -88,7 +88,7 @@ class FG_eval {
 	fg[1 + epsi_start] = vars[epsi_start];
 	
 	// the rest of the constraints
-	for (int i = 1; i < N - 1; i++) {
+	for (int i = 0; i < N - 1; i++) {
 		AD<double> x1 = vars[x_start + i + 1];
 		AD<double> y1 = vars[y_start + i + 1];
 		AD<double> psi1 = vars[psi_start + i + 1];
