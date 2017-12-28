@@ -114,7 +114,7 @@ class FG_eval {
 		fg[2 + y_start + i] = y1 - (y0 + v0 * CppAD::sin(psi0) * dt);
 		fg[2 + psi_start + i] = psi1 - (psi0 - v0 * delta0 / Lf * dt);
 		fg[2 + v_start + i] = v1 - (v0 + a0 * dt);
-		fg[2 + cte_start + i] = cte1 - ((f0 - y0) + (v0 * CppAD::sin(epsi0) * dt);
+		fg[2 + cte_start + i] = cte1 - ((f0 - y0) + (v0 * CppAD::sin(epsi0) * dt));
 		fg[2 + epsi_start + i] = epsi1 - ((psi0 - psides0) - v0 * delta0 / Lf * dt);
 	}
 
@@ -197,19 +197,19 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
     constraints_upperbound[i] = 0;
   }
 
-  costraints_lowerbound[x_start] = x;
-  costraints_lowerbound[y_start] = y;
-  costraints_lowerbound[psi_start] = psi;
-  costraints_lowerbound[v_start] = v;
-  costraints_lowerbound[cte_start] = cte;
-  costraints_lowerbound[epsi_start] = epsi;
+  constraints_lowerbound[x_start] = x;
+  constraints_lowerbound[y_start] = y;
+  constraints_lowerbound[psi_start] = psi;
+  constraints_lowerbound[v_start] = v;
+  constraints_lowerbound[cte_start] = cte;
+  constraints_lowerbound[epsi_start] = epsi;
 
-  costraints_upperbound[x_start] = x;
-  costraints_upperbound[y_start] = y;
-  costraints_upperbound[psi_start] = psi;
-  costraints_upperbound[v_start] = v;
-  costraints_upperbound[cte_start] = cte;
-  costraints_upperbound[epsi_start] = epsi;
+  constraints_upperbound[x_start] = x;
+  constraints_upperbound[y_start] = y;
+  constraints_upperbound[psi_start] = psi;
+  constraints_upperbound[v_start] = v;
+  constraints_upperbound[cte_start] = cte;
+  constraints_upperbound[epsi_start] = epsi;
 
   // object that computes objective and constraints
   FG_eval fg_eval(coeffs);
