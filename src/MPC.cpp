@@ -276,12 +276,12 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 
   std::cout << "create result" << std::endl;
 
-  vector<double> result;
+  vector<double> result = {solution.x[delta_start], solution.x[a_start]};
 
   std::cout << "push result" << std::endl;
 
-  result.push_back(solution.x[delta_start]);
-  result.push_back(solution.x[a_start]);
+  // result.push_back(solution.x[delta_start]);
+  // result.push_back(solution.x[a_start]);
 
   std::cout << "Solve result build" << std::endl;
 
