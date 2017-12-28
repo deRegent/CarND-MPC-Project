@@ -200,6 +200,8 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // the upper and lower limits of delta are set to -25 and 25
   // degrees (values in radians)
 
+  std::cout << "Solve constraints_lowerbound" << std::endl;
+
   // Lower and upper limits for the constraints
   // Should be 0 besides initial state.
   Dvector constraints_lowerbound(n_constraints);
@@ -223,8 +225,12 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   constraints_upperbound[cte_start] = cte;
   constraints_upperbound[epsi_start] = epsi;
 
+  std::cout << "Solve before eval" << std::endl;
+
   // object that computes objective and constraints
   FG_eval fg_eval(coeffs);
+
+  std::cout << "Solve after eval" << std::endl;
 
   //
   // NOTE: You don't have to worry about these options
