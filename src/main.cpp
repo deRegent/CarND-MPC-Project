@@ -128,8 +128,8 @@ int main() {
 		  double cte = polyeval(coeffs, 0);
 		  double epsi = -atan(coeffs[1]);
 
-          double steer_value = j[i]["steering_angle"];
-          double throttle_value = j[i]["throttle"];
+          double steer_value = j[1]["steering_angle"];
+          double throttle_value = j[1]["throttle"];
 
 		  Eigen::VectorXd state(6);
 		  state << 0, 0, 0, v, cte, epsi;
