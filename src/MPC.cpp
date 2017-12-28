@@ -176,21 +176,15 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // to really big and really small numbers
   // because we don't want to constraint it
 
-  std::cout << "actuators delta_start" << std::endl;
-
   for (int i = 0; i < delta_start; i++) {
 	vars_lowerbound[i] = -1.0e19;
 	vars_upperbound[i] = 1.0e19;
   }
 
-  std::cout << "actuators a_start" << std::endl;
-
   for (int u = delta_start; i < a_start; i++) {
 	vars_lowerbound[i] = -0.436332*Lf;
 	vars_lowerbound[i] = 0.436332*Lf;
   }
-
-  std::cout << "actuators n_vars" << std::endl;
 
   for (int i = a_start; i < n_vars; i++) {
 	vars_lowerbound[i] = -1.0;
@@ -199,8 +193,6 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 
   // the upper and lower limits of delta are set to -25 and 25
   // degrees (values in radians)
-
-  std::cout << "Solve constraints_lowerbound" << std::endl;
 
   // Lower and upper limits for the constraints
   // Should be 0 besides initial state.
@@ -225,12 +217,8 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   constraints_upperbound[cte_start] = cte;
   constraints_upperbound[epsi_start] = epsi;
 
-  std::cout << "Solve before eval" << std::endl;
-
   // object that computes objective and constraints
   FG_eval fg_eval(coeffs);
-
-  std::cout << "Solve after eval" << std::endl;
 
   //
   // NOTE: You don't have to worry about these options
@@ -264,9 +252,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // Cost
   auto cost = solution.obj_value;
 
-  std::cout << "the heck?" << std::endl;
   std::cout << "Cost " << cost << std::endl;
-  std::cout << "the heck?" << std::endl;
 
   // TODO: Return the first actuator values. The variables can be accessed with
   // `solution.x[i]`.
