@@ -53,6 +53,8 @@ class FG_eval {
 	// for the MPC project
 	// link: https://www.youtube.com/watch?v=bOQuhpz3YfU&list=PLAwxTw4SYaPnfR7TzRZN-uxlxGbqxhtm2&index=5
 
+	std::cout << "operator() started" << std::endl;
+
 	fg[0] = 0;
 
 	// Reference State Cost
@@ -118,6 +120,7 @@ class FG_eval {
 		fg[2 + epsi_start + i] = epsi1 - ((psi0 - psides0) - v0 * delta0 / Lf * dt);
 	}
 
+	std::cout << "operator() finished" << std::endl;
 
   }
 };
@@ -138,6 +141,8 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // element vector and there are 10 timesteps. The number of variables is:
   //
   // 4 * 10 + 2 * 9
+
+  std::cout << "Solve started" << std::endl;
 
   double x = state[0];
   double y = state[1];
@@ -170,15 +175,22 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // sets bounds for x,y, psi, v, cte, epsi 
   // to really big and really small numbers
   // because we don't want to constraint it
+
+  std::cout << "actuators delta_start" << std::endl;
+
   for (int i = 0; i < delta_start; i++) {
 	vars_lowerbound[i] = -1.0e19;
 	vars_upperbound[i] = 1.0e19;
   }
 
+  std::cout << "actuators a_start" << std::endl;
+
   for (int u = delta_start; i < a_start; i++) {
 	vars_lowerbound[i] = -0.436332*Lf;
 	vars_lowerbound[i] = 0.436332*Lf;
   }
+
+  std::cout << "actuators n_vars" << std::endl;
 
   for (int i = a_start; i < n_vars; i++) {
 	vars_lowerbound[i] = -1.0;
@@ -258,10 +270,14 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   result.push_back(solution.x[delta_start]);
   result.push_back(solution.x[a_start]);
 
+  std::cout << "Solve result build" << std::endl;
+
   for (int i = 0; i < N - 1; i++){
 	result.push_back(solution.x[x_start + i + 1]);
 	result.push_back(solution.x[y_start + i + 1]);
   }
+
+  std::cout << "Solve finished" << std::endl;
 
   return result;
 }

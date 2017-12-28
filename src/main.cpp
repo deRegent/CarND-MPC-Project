@@ -103,6 +103,8 @@ int main() {
 		  // which is walkthrough for this project provided by the Udacity mentor
 		  // link: https://www.youtube.com/watch?v=bOQuhpz3YfU&list=PLAwxTw4SYaPnfR7TzRZN-uxlxGbqxhtm2&index=5
 
+		  std::cout << "main.cpp int i = 0; i < ptsx.size(); i++" << std::endl;
+
 		  for (int i = 0; i < ptsx.size(); i++ ) {
 			// shift car reference angle to 90 degrees
 			// this step helps with the polyfit later because 
@@ -134,12 +136,16 @@ int main() {
 		  Eigen::VectorXd state(6);
 		  state << 0, 0, 0, v, cte, epsi;
 
-		  // auto vars = mpc.Solve(state, coeffs);
+		  std::cout << "mpc solve started" << std::endl;
 
-		  // double Lf = 2.67;
+		  auto vars = mpc.Solve(state, coeffs);
 
-		  // steer_value = vars[0]/(deg2rad(25)*Lf);
-		  // throttle_value = vars[1];
+		  std::cout << "mpc solve finished" << std::endl;
+
+		  double Lf = 2.67;
+
+		  steer_value = vars[0]/(deg2rad(25)*Lf);
+		  throttle_value = vars[1];
 
 		  json msgJson;
 		  // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
