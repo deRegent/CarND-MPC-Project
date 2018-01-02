@@ -183,7 +183,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 
   for (int i = delta_start; i < a_start; i++) {
 	vars_lowerbound[i] = -0.436332*Lf;
-	vars_lowerbound[i] = 0.436332*Lf;
+	vars_upperbound[i] = 0.436332*Lf;
   }
 
   for (int i = a_start; i < n_vars; i++) {
