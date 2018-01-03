@@ -25,7 +25,7 @@ const double Lf = 2.67;
 // set to the same values as in the Self-Driving Cars Project Q&As for the MPC project
 double ref_cte = 0;
 double ref_epsi = 0;
-double ref_v = 100;
+double ref_v = 30;
 
 size_t x_start = 0;
 size_t y_start = x_start + N;
@@ -52,8 +52,6 @@ class FG_eval {
 	// the implementation is similar to the Self-Driving Cars Project Q&As 
 	// for the MPC project
 	// link: https://www.youtube.com/watch?v=bOQuhpz3YfU&list=PLAwxTw4SYaPnfR7TzRZN-uxlxGbqxhtm2&index=5
-
-	std::cout << "operator() started" << std::endl;
 
 	fg[0] = 0;
 
@@ -120,8 +118,6 @@ class FG_eval {
 		fg[2 + epsi_start + i] = epsi1 - ((psi0 - psides0) - v0 * delta0 / Lf * dt);
 	}
 
-	std::cout << "operator() finished" << std::endl;
-
   }
 };
 
@@ -141,8 +137,6 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // element vector and there are 10 timesteps. The number of variables is:
   //
   // 4 * 10 + 2 * 9
-
-  std::cout << "Solve started" << std::endl;
 
   double x = state[0];
   double y = state[1];
@@ -260,23 +254,15 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // {...} is shorthand for creating a vector, so auto x1 = {1.0,2.0}
   // creates a 2 element double vector.
 
-  std::cout << "create result" << std::endl;
-
   vector<double> result = {solution.x[delta_start], solution.x[a_start]};
-
-  std::cout << "push result" << std::endl;
 
   // result.push_back(solution.x[delta_start]);
   // result.push_back(solution.x[a_start]);
-
-  std::cout << "Solve result build" << std::endl;
 
   for (int i = 0; i < N - 1; i++){
 	result.push_back(solution.x[x_start + i + 1]);
 	result.push_back(solution.x[y_start + i + 1]);
   }
-
-  std::cout << "Solve finished" << std::endl;
 
   return result;
 }

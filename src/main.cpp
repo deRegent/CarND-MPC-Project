@@ -103,8 +103,6 @@ int main() {
 		  // which is walkthrough for this project provided by the Udacity mentor
 		  // link: https://www.youtube.com/watch?v=bOQuhpz3YfU&list=PLAwxTw4SYaPnfR7TzRZN-uxlxGbqxhtm2&index=5
 
-		  std::cout << "main.cpp int i = 0; i < ptsx.size(); i++" << std::endl;
-
 		  for (int i = 0; i < ptsx.size(); i++ ) {
 			// shift car reference angle to 90 degrees
 			// this step helps with the polyfit later because 
@@ -136,11 +134,7 @@ int main() {
 		  Eigen::VectorXd state(6);
 		  state << 0, 0, 0, v, cte, epsi;
 
-		  std::cout << "mpc solve started" << std::endl;
-
 		  auto vars = mpc.Solve(state, coeffs);
-
-		  std::cout << "mpc solve finished" << std::endl;
 
 		  double Lf = 2.67;
 
@@ -152,6 +146,9 @@ int main() {
 		  // Otherwise the values will be in between [-deg2rad(25), deg2rad(25] instead of [-1, 1].
 		  msgJson["steering_angle"] = steer_value;
 		  msgJson["throttle"] = throttle_value;
+
+		  std::cout << "steering_angle " << steer_value << std::endl;
+		  std::cout << "throttle_value " << throttle_value << std::endl;
 
 		  //Display the MPC predicted trajectory 
 		  vector<double> mpc_x_vals;
@@ -190,7 +187,8 @@ int main() {
 
 
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
+          // std::cout << msg << std::endl;
+
           // Latency
           // The purpose is to mimic real driving conditions where
           // the car does actuate the commands instantly.
