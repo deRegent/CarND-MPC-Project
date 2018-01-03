@@ -129,6 +129,8 @@ int main() {
 		  //Eigen::VectorXd state(6);
 		  //state << 0, 0, 0, v, cte, epsi;
 
+		  double Lf = 2.67;
+
 		  // init first 3 state arguments from the previous state (commented)
 		  px = 0;
           py = 0;
@@ -155,8 +157,6 @@ int main() {
           state << px, py, psi, v, cte, epsi;
 
 		  auto vars = mpc.Solve(state, coeffs);
-
-		  double Lf = 2.67;
 
 		  steer_value = vars[0]/(deg2rad(25)*Lf);
 		  throttle_value = vars[1];
