@@ -143,13 +143,13 @@ int main() {
 		  // not sure about minus here but 
 		  // in the Q&A for the project we use minus instead of plus
 		  // so I did it like in MPC.cpp
-          psi = psi - (v / Lf) * delta * dt; 
+          psi = psi - (v / Lf) * steer_value * dt; 
 		  // throttle_value is "a" in the equations
 		  v = v + throttle_value * dt; 
 		  // f(xt) - yt is cte in the equations
           cte = cte + v * sin(epsi) * dt;
 		  // psi_t - psi_des_t is epsi in the equations
-          epsi = epsi + (v / Lf) * delta * dt;
+          epsi = epsi + (v / Lf) * steer_value * dt;
           
           Eigen::VectorXd state(6);
           state << px, py, psi, v, cte, epsi;
