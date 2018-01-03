@@ -25,7 +25,7 @@ const double Lf = 2.67;
 // set to the same values as in the Self-Driving Cars Project Q&As for the MPC project
 double ref_cte = 0;
 double ref_epsi = 0;
-double ref_v = 30;
+double ref_v = 100;
 
 size_t x_start = 0;
 size_t y_start = x_start + N;
