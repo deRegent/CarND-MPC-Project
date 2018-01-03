@@ -129,7 +129,7 @@ int main() {
 		  //Eigen::VectorXd state(6);
 		  //state << 0, 0, 0, v, cte, epsi;
 
-		  // init first 3 state arguments from the
+		  // init first 3 state arguments from the previous state (commented)
 		  px = 0;
           py = 0;
           psi = 0;
