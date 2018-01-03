@@ -110,17 +110,12 @@ int main() {
 			double shift_x = ptsx[i] - px;
 			double shift_y = ptsy[i] - py;
 
-			ptsx[i] = (shift_x * cos(0-psi) - shift_y * sin(0-psi));
-			ptsy[i] = (shift_x * sin(0-psi) - shift_y * cos(0-psi));
+			ptsx[i] = (shift_x * cos(psi) + shift_y * sin(psi));
+			ptsy[i] = (-(shift_x * sin(psi)) + shift_y * cos(psi));
 		  }
 
-		  double* ptrx = &ptsx[0];
-		  // take 6 neares waypoints
-		  Eigen::Map<Eigen::VectorXd> ptsx_transform(ptrx, 6);
-
-		  double* ptry = &ptsy[0];
-		  // take 6 neares waypoints
-		  Eigen::Map<Eigen::VectorXd> ptsy_transform(ptry, 6);
+		  Eigen::VectorXd ptsx_transform = Eigen::VectorXd::Map(ptsx.data(), ptsx.size());
+          Eigen::VectorXd ptsy_transform = Eigen::VectorXd::Map(ptsy.data(), ptsy.size());
 
 		  auto coeffs = polyfit(ptsx_transform, ptsy_transform, 3);
 
@@ -140,8 +135,6 @@ int main() {
 
 		  steer_value = vars[0]/(deg2rad(25)*Lf);
 		  throttle_value = vars[1];
-
-		  throttle_value = 0.5;
 
 		  json msgJson;
 		  // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
@@ -177,11 +170,9 @@ int main() {
           // add (x,y) points to list here, points are in reference to the vehicle's coordinate system
 		  // the points in the simulator are connected by a Yellow line
 
-		  double poly_inc = 2.5;
-		  int num_points = 25; // show num_points in the future 
-		  for(int i=1; i < num_points; i++){
-			next_x_vals.push_back(poly_inc*i);
-			next_y_vals.push_back(polyeval(coeffs, poly_inc*1));
+		  for(int i = 0; i < ptsx_transform.size(); i++){
+			next_x_vals.push_back(ptsx_transform[i]);
+			next_y_vals.push_back(ptsy_transform[i]);
 		  }
 
           msgJson["next_x"] = next_x_vals;
