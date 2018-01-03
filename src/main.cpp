@@ -126,8 +126,33 @@ int main() {
           double steer_value = j[1]["steering_angle"];
           double throttle_value = j[1]["throttle"];
 
-		  Eigen::VectorXd state(6);
-		  state << 0, 0, 0, v, cte, epsi;
+		  //Eigen::VectorXd state(6);
+		  //state << 0, 0, 0, v, cte, epsi;
+
+		  // init first 3 state arguments from the
+		  px = 0;
+          py = 0;
+          psi = 0;
+
+		  double dt = 0.1; // 100 mls
+
+		  // vehicle kinematic model equations
+		  // from part 6 of Lesson 19 in Model Predictive Control
+          px = px + v * cos(psi) * dt;
+          py = py + v * sin(psi) * dt;
+		  // not sure about minus here but 
+		  // in the Q&A for the project we use minus instead of plus
+		  // so I did it like in MPC.cpp
+          psi = psi - (v / Lf) * delta * dt; 
+		  // throttle_value is "a" in the equations
+		  v = v + throttle_value * dt; 
+		  // f(xt) - yt is cte in the equations
+          cte = cte + v * sin(epsi) * dt;
+		  // psi_t - psi_des_t is epsi in the equations
+          epsi = epsi + (v / Lf) * delta * dt;
+          
+          Eigen::VectorXd state(6);
+          state << px, py, psi, v, cte, epsi;
 
 		  auto vars = mpc.Solve(state, coeffs);
 
