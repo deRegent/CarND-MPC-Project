@@ -74,18 +74,25 @@ int main(int argc, char *argv[]) {
   double init_N = /* 10; */ atof(argv[1]);
   double init_dt = /* 0.1; */ atof(argv[2]);
 
-  double cte_importance = /* 500; */ atof(argv[3]);
-  double epsi_importance = /* 500; */ atof(argv[4]);
-  double v_importance = /* 1; */ atof(argv[5]);
+  double init_cte_importance = /* 500; */ atof(argv[3]);
+  double init_epsi_importance = /* 500; */ atof(argv[4]);
+  double init_v_importance = /* 1; */ atof(argv[5]);
 
-  double delta_importance = /* 5; */ atof(argv[6]);
-  double a_importance = /* 5; */ atof(argv[7]);
+  double init_delta_importance = /* 5; */ atof(argv[6]);
+  double init_a_importance = /* 5; */ atof(argv[7]);
 
-  double delta_gap_importance = /* 200; */ atof(argv[8]);
-  double a_gap_importance = /* 10; */ atof(argv[9]);
+  double init_delta_gap_importance = /* 200; */ atof(argv[8]);
+  double init_a_gap_importance = /* 10; */ atof(argv[9]);
 
-  mpc.N = init_N;
-  mpc.dt = init_dt;
+  mpc.timestep_length = init_N;
+  mpc.timestep_duration = init_dt;
+  mpc.cte_cost = init_cte_importance;
+  mpc.epsi_cost = init_epsi_importance;
+  mpc.v_cost = init_v_importance;
+  mpc.delta_cost = init_delta_importance;
+  mpc.a_cost = init_a_importance;
+  mpc.delta_gap_cost = init_delta_gap_importance;
+  mpc.a_gap_cost = init_a_gap_importance;
 
   h.onMessage([&mpc](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
