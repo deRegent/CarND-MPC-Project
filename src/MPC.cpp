@@ -5,11 +5,6 @@
 
 using CppAD::AD;
 
-// TODO: Set the timestep length and duration
-// set to the same values as in the Self-Driving Cars Project Q&As for the MPC project
-size_t N = 10;
-double dt = .1;
-
 // This value assumes the model presented in the classroom is used.
 //
 // It was obtained by measuring the radius formed by running the vehicle in the

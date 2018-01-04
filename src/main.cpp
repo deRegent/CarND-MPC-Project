@@ -71,8 +71,8 @@ int main(int argc, char *argv[]) {
   // MPC is initialized here!
   MPC mpc;
 
-  double init_N = /* 10 */ atof(argv[1]);
-  double init_dt = /* 0.1 */ atof(argv[2]);
+  double init_N = 10; // atof(argv[1]);
+  double init_dt = 0.1; // atof(argv[2]);
 
   mpc.N = init_N;
   mpc.dt = init_dt;
