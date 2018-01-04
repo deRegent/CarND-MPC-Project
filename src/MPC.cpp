@@ -17,6 +17,9 @@ using CppAD::AD;
 // This is the length from front to CoG that has a similar radius.
 const double Lf = 2.67;
 
+double cte_cost = 500;
+double epsi_cost = 500;
+
 // set to the same values as in the Self-Driving Cars Project Q&As for the MPC project
 double ref_cte = 0;
 double ref_epsi = 0;
@@ -55,8 +58,8 @@ class FG_eval {
 	// parameter importance values
 	for (int i = 0; i < N; i++){
 		// pay more attention to the cte and epsi
-		fg[0] += 2000*CppAD::pow(vars[cte_start + i] - ref_cte, 2); 
-		fg[0] += 2000*CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
+		fg[0] += cte_cost*CppAD::pow(vars[cte_start + i] - ref_cte, 2); 
+		fg[0] += epsi_cost*CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
 		fg[0] += CppAD::pow(vars[v_start + i] - ref_v, 2);
 	}
 
