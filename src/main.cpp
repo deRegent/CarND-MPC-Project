@@ -65,11 +65,17 @@ Eigen::VectorXd polyfit(Eigen::VectorXd xvals, Eigen::VectorXd yvals,
   return result;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
   uWS::Hub h;
 
   // MPC is initialized here!
   MPC mpc;
+
+  double init_N = /* 10 */ atof(argv[1]);
+  double init_dt = /* 0.1 */ atof(argv[2])
+
+  mpc.N = init_N;
+  mpc.dt = init_dt;
 
   h.onMessage([&mpc](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {

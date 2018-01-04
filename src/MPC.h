@@ -8,6 +8,10 @@ using namespace std;
 
 class MPC {
  public:
+
+  size_t N = 10;
+  double dt = .1;
+
   MPC();
 
   virtual ~MPC();
