@@ -22,6 +22,19 @@ double ref_cte = 0;
 double ref_epsi = 0;
 double ref_v = 100;
 
+size_t N;
+double dt;
+
+double cte_importance;
+double epsi_importance;
+double v_importance;
+
+double delta_importance;
+double a_importance;
+
+double delta_gap_importance;
+double a_gap_importance;
+
 size_t x_start;
 size_t y_start;
 size_t psi_start;
@@ -123,6 +136,20 @@ MPC::MPC() {}
 MPC::~MPC() {}
 
 vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
+
+  N = timestep_length;
+  dt = timestep_duration;
+
+  cte_importance = cte_cost;
+  epsi_importance = epsi_cost;
+  v_importance = v_cost;
+
+  delta_importance = delta_cost;
+  a_importance = a_cost;
+
+  delta_gap_importance = delta_gap_cost;
+  a_gap_importance = a_gap_cost;
+
   x_start = 0;
   y_start = x_start + N;
   psi_start = y_start + N;

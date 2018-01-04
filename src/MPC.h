@@ -9,18 +9,18 @@ using namespace std;
 class MPC {
  public:
 
-  size_t N;
-  double dt;
+  size_t timestep_length;
+  double timestep_duration;
 
-  double cte_importance;
-  double epsi_importance;
-  double v_importance;
+  double cte_cost;
+  double epsi_cost;
+  double v_cost;
 
-  double delta_importance;
-  double a_importance;
+  double delta_cost;
+  double a_cost;
 
-  double delta_gap_importance;
-  double a_gap_importance;
+  double delta_gap_cost;
+  double a_gap_cost;
 
   MPC();
 
