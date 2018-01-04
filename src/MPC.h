@@ -9,8 +9,18 @@ using namespace std;
 class MPC {
  public:
 
-  size_t N = 10;
-  double dt = .1;
+  size_t N;
+  double dt;
+
+  double cte_importance;
+  double epsi_importance;
+  double v_importance;
+
+  double delta_importance;
+  double a_importance;
+
+  double delta_gap_importance;
+  double a_gap_importance;
 
   MPC();
 

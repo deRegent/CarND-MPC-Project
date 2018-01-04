@@ -17,22 +17,19 @@ using CppAD::AD;
 // This is the length from front to CoG that has a similar radius.
 const double Lf = 2.67;
 
-double cte_cost = 500;
-double epsi_cost = 500;
-
 // set to the same values as in the Self-Driving Cars Project Q&As for the MPC project
 double ref_cte = 0;
 double ref_epsi = 0;
 double ref_v = 100;
 
-size_t x_start = 0;
-size_t y_start = x_start + N;
-size_t psi_start = y_start + N;
-size_t v_start = psi_start + N;
-size_t cte_start = v_start + N;
-size_t epsi_start = cte_start + N;
-size_t delta_start = epsi_start + N;
-size_t a_start = delta_start + N - 1;
+size_t x_start;
+size_t y_start;
+size_t psi_start;
+size_t v_start;
+size_t cte_start;
+size_t epsi_start;
+size_t delta_start;
+size_t a_start;
 
 class FG_eval {
  public:
@@ -58,19 +55,19 @@ class FG_eval {
 	// parameter importance values
 	for (int i = 0; i < N; i++){
 		// pay more attention to the cte and epsi
-		fg[0] += cte_cost*CppAD::pow(vars[cte_start + i] - ref_cte, 2); 
-		fg[0] += epsi_cost*CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
-		fg[0] += CppAD::pow(vars[v_start + i] - ref_v, 2);
+		fg[0] += cte_importance * CppAD::pow(vars[cte_start + i] - ref_cte, 2); 
+		fg[0] += epsi_importance * CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
+		fg[0] += v_importance * CppAD::pow(vars[v_start + i] - ref_v, 2);
 	}
 
 	for (int i = 0; i < N - 1; i++) {
-		fg[0] += 5*CppAD::pow(vars[delta_start + i], 2);
-		fg[0] += 5*CppAD::pow(vars[a_start + i], 2);
+		fg[0] += delta_importance * CppAD::pow(vars[delta_start + i], 2);
+		fg[0] += a_importance * CppAD::pow(vars[a_start + i], 2);
 	}
 
 	for (int i = 0; i < N - 2; i++) {
-		fg[0] += 200*CppAD::pow(vars[delta_start + i] - vars[delta_start + i], 2);
-		fg[0] += 10*CppAD::pow(vars[a_start + i] - vars[a_start + i], 2);
+		fg[0] += delta_gap_importance*CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
+		fg[0] += a_gap_importance*CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
 	}
 
 	// Setup Constraints
@@ -126,6 +123,15 @@ MPC::MPC() {}
 MPC::~MPC() {}
 
 vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
+  x_start = 0;
+  y_start = x_start + N;
+  psi_start = y_start + N;
+  v_start = psi_start + N;
+  cte_start = v_start + N;
+  epsi_start = cte_start + N;
+  delta_start = epsi_start + N;
+  a_start = delta_start + N - 1;
+	
   bool ok = true;
   size_t i;
   typedef CPPAD_TESTVECTOR(double) Dvector;
